@@ -19,3 +19,27 @@ loans_data = pd.read_csv('https://spark-public.s3.amazonaws.com/dataanalysis/loa
 # loans_data['Interest.Rate'][0:10] --> % 기호등은 필요없다.
 # loans_data['FICO.Range'][0:10] --> 대시(-)로 구분된 값을 처리해야한다.
 # "715-719" 로 된 값을 (715, 719)로 변환해야함
+
+# Cleansing data
+
+loans = pd.read_csv('load_csv')
+loans.head()
+
+# Histogram으로 데이터의 양태를 추적한다.
+plt.figure()
+
+fico = loans['FICO.Score']
+fico.hist(bins = 20)
+
+# Box Plot
+plt.figure()
+x = loans.boxplot('Interest.Rate', 'FICO.Score')
+x.set_xticklabels(['630',  '', '', '', '', '660',  '', '', '', '', '690',  '', '', '', '', '720',  '', '', '', '', '750',  '', '', '', '', '780',  '', '', '', '', '810',  '', '', '', '', '840'])
+x.set_xlabel("FICO Score")
+x.set_ylabel("Interest Rate in %")
+x.set_title("BOX PLOT")
+
+plt.show()
+
+# Scatterplot Matrix
+pd.plotting.scatter_matrix(loans, alpha = 0.1, figsize=(10, 10), diagonal = 'hist')
